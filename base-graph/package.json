@@ -1,0 +1,15 @@
+{
+  "name": "base-graph",
+  "version": "1.0.0",
+  "main": "target/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc target",
+    "dev": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "@types/node": "^20.6.0"
+  }
+}
