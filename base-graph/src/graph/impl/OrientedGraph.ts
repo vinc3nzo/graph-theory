@@ -6,20 +6,20 @@ import {
 } from '@graph/error/GraphError';
 
 export class OrientedGraph implements IOrientedGraph {
-    private graph: Map<string, Array<string>>;
+    private readonly graph: Map<string, string[]>;
 
-    public constructor() {
+    constructor() {
         this.graph = new Map()
     }
 
-    public addNode(label: string): void {
+    addNode(label: string): void {
         if (this.graph.has(label)) {
             throw new NodeAlreadyExists(label);
         }
         this.graph.set(label, [])
     }
 
-    public connectNodes(a: string, b: string): void {
+    connectNodes(a: string, b: string): void {
         if (!this.graph.has(a)) {
             throw new NodeNotExists(a)
         }
@@ -32,7 +32,7 @@ export class OrientedGraph implements IOrientedGraph {
         this.graph.get(a)!.push(b);
     }
 
-    public removeNode(label: string): void {
+    removeNode(label: string): void {
         if (!this.graph.has(label)) {
             throw new NodeNotExists(label);
         }
@@ -41,5 +41,9 @@ export class OrientedGraph implements IOrientedGraph {
         for (let value of this.graph.values()) {
             delete value[value.indexOf(label)]
         }
+    }
+
+    getAdjacencyList(): Map<string, string[]> {
+        return new Map(this.graph)
     }
 }

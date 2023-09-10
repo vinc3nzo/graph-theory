@@ -34,4 +34,9 @@ export interface IWeightedOrientedGraph<T> {
      * Если уже существует дуга от `a` до `b`.
      */
     connectNodes(a: string, b: string, weight: T): void;
+
+    /**
+     * Возвращает список смежности, соответствующий графу.
+     */
+    getAdjacencyList(): Map<string, [string, T][]>;
 }

@@ -32,4 +32,9 @@ export interface IOrientedGraph {
      * Если уже существует дуга от `a` до `b`.
      */
     connectNodes(a: string, b: string): void;
+
+    /**
+     * Возвращает список смежности, соответствующий графу.
+     */
+    getAdjacencyList(): Map<string, string[]>;
 }

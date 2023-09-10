@@ -34,4 +34,9 @@ export interface IWeightedUnorientedGraph<T> {
      * Если уже существует ребро между `a` и `b`.
      */
     connectNodes(a: string, b: string, weight: T): void;
+
+    /**
+     * Возвращает список смежности, соответствующий графу.
+     */
+    getAdjacencyList(): Map<string, [string, T][]>;
 }

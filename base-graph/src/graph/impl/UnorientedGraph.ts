@@ -6,20 +6,20 @@ import {
 } from '@graph/error/GraphError';
 
 export class UnorientedGraph implements IUnorientedGraph {
-    private graph: Map<string, Array<string>>;
+    private readonly graph: Map<string, string[]>;
 
-    public constructor() {
+    constructor() {
         this.graph = new Map()
     }
 
-    public addNode(label: string): void {
+    addNode(label: string): void {
         if (this.graph.has(label)) {
             throw new NodeAlreadyExists(label);
         }
         this.graph.set(label, [])
     }
 
-    public connectNodes(a: string, b: string): void {
+    connectNodes(a: string, b: string): void {
         if (!this.graph.has(a)) {
             throw new NodeNotExists(a)
         }
@@ -33,14 +33,18 @@ export class UnorientedGraph implements IUnorientedGraph {
         this.graph.get(b)!.push(a);
     }
 
-    public removeNode(label: string): void {
+    removeNode(label: string): void {
         if (!this.graph.has(label)) {
             throw new NodeNotExists(label);
         }
 
         this.graph.delete(label);
         for (let value of this.graph.values()) {
-            delete value[value.indexOf(label)]
+            value.splice(value.indexOf(label), 1)
         }
+    }
+
+    getAdjacencyList(): Map<string, string[]> {
+        return new Map(this.graph)
     }
 }

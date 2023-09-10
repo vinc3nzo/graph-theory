@@ -32,4 +32,9 @@ export interface IUnorientedGraph {
      * Если уже существует ребро между `a` и `b`.
      */
     connectNodes(a: string, b: string): void;
+
+    /**
+     * Возвращает список смежности, соответствующий графу.
+     */
+    getAdjacencyList(): Map<string, string[]>;
 }
