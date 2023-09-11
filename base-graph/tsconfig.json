@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["es6"],
+    "baseUrl": "./src",
+    "outDir": "target",
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -12,7 +14,7 @@
     "isolatedModules": true,
     "incremental": true,
     "paths": {
-      "@graph/*": ["./src/graph/*"]
+      "@graph/*": ["graph/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
