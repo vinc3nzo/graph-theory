@@ -1,54 +1,33 @@
 import {
     ConnectionAlreadyExists,
-    NodeAlreadyExists,
     NodeNotExists,
 } from 'graph/error/GraphError';
 
-export class WeightedOrientedGraph<T> {
-    private readonly graph: Map<string, [string, T][]>;
+import {WeightedGraph} from "graph/WeightedGraph";
+import * as fs from "fs";
 
-    constructor() {
-        this.graph = new Map()
+export class WeightedOrientedGraph extends WeightedGraph {
+    constructor(arg?: WeightedOrientedGraph | string) {
+        super(arg)
     }
 
-    addNode(label: string): void {
-        if (this.graph.has(label)) {
-            throw new NodeAlreadyExists(label);
-        }
-        this.graph.set(label, [])
-    }
-
-    connectNodes(a: string, b: string, weight: T): void {
-        if (!this.graph.has(a)) {
+    connectNodes(a: string, b: string, weight: number): void {
+        if (!this.adj.has(a)) {
             throw new NodeNotExists(a)
         }
-        if (!this.graph.has(b)) {
+        if (!this.adj.has(b)) {
             throw new NodeNotExists(b)
         }
-
-        let existingConnection = this.graph.get(a)!.find(
-            (value) => value[0] == b
-        )
-
-        if (existingConnection) {
+        if (this.adj.get(a)!.has(b)) {
             throw new ConnectionAlreadyExists(a, b)
         }
-
-        this.graph.get(a)!.push([b, weight]);
+        this.adj.get(a)!.set(b, weight)
     }
 
-    removeNode(label: string): void {
-        if (!this.graph.has(label)) {
-            throw new NodeNotExists(label);
-        }
-
-        this.graph.delete(label);
-        for (let value of this.graph.values()) {
-            delete value[value.findIndex((record) => record[0] == label)]
-        }
-    }
-
-    getAdjacencyList(): Map<string, [string, T][]> {
-        return new Map(this.graph)
+    load(filename: string): void {
+        const graph = new WeightedOrientedGraph()
+        const text = fs.readFileSync(filename, 'utf-8')
+        graph.fillFromText(text)
+        this.adj = graph.getAdjacencyList()
     }
 }

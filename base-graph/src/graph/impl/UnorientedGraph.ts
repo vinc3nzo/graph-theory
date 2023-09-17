@@ -1,21 +1,21 @@
 import {
     ConnectionAlreadyExists,
-    NodeAlreadyExists,
     NodeNotExists,
 } from 'graph/error/GraphError';
 
-export class UnorientedGraph {
-    private readonly graph: Map<string, string[]>;
+import {Graph} from "../Graph";
+import * as fs from "fs";
 
-    constructor() {
-        this.graph = new Map()
+export class UnorientedGraph extends Graph {
+    constructor(arg?: UnorientedGraph | string) {
+        super(arg)
     }
 
-    addNode(label: string): void {
-        if (this.graph.has(label)) {
-            throw new NodeAlreadyExists(label);
-        }
-        this.graph.set(label, [])
+    load(filename: string): void {
+        const graph = new UnorientedGraph()
+        const text = fs.readFileSync(filename, 'utf-8')
+        graph.fillFromText(text)
+        this.graph = graph.getAdjacencyList()
     }
 
     connectNodes(a: string, b: string): void {
@@ -30,20 +30,5 @@ export class UnorientedGraph {
         }
         this.graph.get(a)!.push(b);
         this.graph.get(b)!.push(a);
-    }
-
-    removeNode(label: string): void {
-        if (!this.graph.has(label)) {
-            throw new NodeNotExists(label);
-        }
-
-        this.graph.delete(label);
-        for (let value of this.graph.values()) {
-            value.splice(value.indexOf(label), 1)
-        }
-    }
-
-    getAdjacencyList(): Map<string, string[]> {
-        return new Map(this.graph)
     }
 }

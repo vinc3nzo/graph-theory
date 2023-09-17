@@ -4,18 +4,12 @@ import {
     NodeNotExists,
 } from 'graph/error/GraphError';
 
-export class OrientedGraph {
-    private readonly graph: Map<string, string[]>;
+import {Graph} from "../Graph";
+import * as fs from "fs";
 
-    constructor() {
-        this.graph = new Map()
-    }
-
-    addNode(label: string): void {
-        if (this.graph.has(label)) {
-            throw new NodeAlreadyExists(label);
-        }
-        this.graph.set(label, [])
+export class OrientedGraph extends Graph {
+    constructor(arg?: OrientedGraph | string) {
+        super(arg)
     }
 
     connectNodes(a: string, b: string): void {
@@ -31,18 +25,10 @@ export class OrientedGraph {
         this.graph.get(a)!.push(b);
     }
 
-    removeNode(label: string): void {
-        if (!this.graph.has(label)) {
-            throw new NodeNotExists(label);
-        }
-
-        this.graph.delete(label);
-        for (let value of this.graph.values()) {
-            delete value[value.indexOf(label)]
-        }
-    }
-
-    getAdjacencyList(): Map<string, string[]> {
-        return new Map(this.graph)
+    load(filename: string): void {
+        const graph = new OrientedGraph()
+        const text = fs.readFileSync(filename, 'utf-8')
+        graph.fillFromText(text)
+        this.graph = graph.getAdjacencyList()
     }
 }
