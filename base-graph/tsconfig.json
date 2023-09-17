@@ -1,20 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["es6"],
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "ES6",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "paths": {
-      "@graph/*": ["./src/graph/*"]
-    }
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "outDir": "./target"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

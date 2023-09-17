@@ -1,11 +1,10 @@
-import {IWeightedUnorientedGraph} from "@graph/interfaces/IWeightedUnorientedGraph";
 import {
     ConnectionAlreadyExists,
     NodeAlreadyExists,
     NodeNotExists,
-} from '@graph/error/GraphError';
+} from 'graph/error/GraphError';
 
-export class WeightedUnorientedGraph<T> implements IWeightedUnorientedGraph<T> {
+export class WeightedUnorientedGraph<T> {
     private readonly graph: Map<string, Array<[string, T]>>;
 
     constructor() {

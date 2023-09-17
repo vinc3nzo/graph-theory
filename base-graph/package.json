@@ -1,11 +1,10 @@
 {
   "name": "base-graph",
   "version": "1.0.0",
-  "main": "target/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "dist": "tsc && NODE_PATH=target node target/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.6.0",

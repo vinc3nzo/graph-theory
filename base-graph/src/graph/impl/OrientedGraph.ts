@@ -1,11 +1,10 @@
-import {IOrientedGraph} from '@graph/interfaces/IOrientedGraph';
 import {
     ConnectionAlreadyExists,
     NodeAlreadyExists,
     NodeNotExists,
-} from '@graph/error/GraphError';
+} from 'graph/error/GraphError';
 
-export class OrientedGraph implements IOrientedGraph {
+export class OrientedGraph {
     private readonly graph: Map<string, string[]>;
 
     constructor() {

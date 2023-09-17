@@ -1,11 +1,10 @@
-import {IUnorientedGraph} from '@graph/interfaces/IUnorientedGraph';
 import {
     ConnectionAlreadyExists,
     NodeAlreadyExists,
     NodeNotExists,
-} from '@graph/error/GraphError';
+} from 'graph/error/GraphError';
 
-export class UnorientedGraph implements IUnorientedGraph {
+export class UnorientedGraph {
     private readonly graph: Map<string, string[]>;
 
     constructor() {
