@@ -1,7 +1,6 @@
-import {WeightedGraph} from "./graph/WeightedGraph";
-import {WeightedUnorientedGraph} from "./graph/impl/WeightedUnorientedGraph";
+import {Graph} from 'graph/Graph'
 
-const graph: WeightedGraph = new WeightedUnorientedGraph('graph.txt');
+const graph = new Graph('graph.txt');
 console.log(graph.getAdjacencyList());
 
 graph.removeNode('b')
