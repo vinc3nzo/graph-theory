@@ -84,56 +84,13 @@ export class Graph {
     }
 
     private loadFromFile(filename: string) {
-        const lines = fs.readFileSync(filename, 'utf-8').split('\n')
-        const firstLine = lines[0].trim()
-        const graphParams = firstLine.split(' ')
-
+        const text = fs.readFileSync(filename, 'utf-8')
+        const obj: Graph = JSON.parse(text)
+        this.weighted = obj.weighted
+        this.oriented = obj.oriented
         this.adj = new Map()
-        this.weighted = graphParams.includes('w')
-        this.oriented = graphParams.includes('o')
 
-        for (const line of lines.slice(1)) {
-            if (line.trim() !== '') {
-                const [node, neighborsStr] = line.split(':')
-                const neighbors = neighborsStr.trim().split(' ')
-
-                if (!this.exists(node)) {
-                    this.addNode(node)
-                }
-
-                for (const neighbor of neighbors) {
-                    if (neighbor.trim() !== '') {
-                        if (this.weighted) {
-                            const [neighborNode, weight] = neighbor.split('[')
-                            const destinationNode = neighborNode.trim()
-                            const destinationWeight = parseFloat(weight.slice(0, -1))
-
-                            if (!this.exists(destinationNode)) {
-                                this.addNode(destinationNode)
-                            }
-
-                            if (!this.connected(node, destinationNode)) {
-                                this.connect(node, destinationNode, destinationWeight)
-                                if (!this.oriented) {
-                                    this.connect(destinationNode, node, destinationWeight)
-                                }
-                            }
-                        }
-                        else {
-                            if (!this.exists(neighbor)) {
-                                this.addNode(neighbor)
-                            }
-                            if (!this.connected(node, neighbor)) {
-                                this.connect(node, neighbor)
-                                if (!this.oriented) {
-                                    this.connect(neighbor, node)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        const keys = 
     }
 
     dump(filename: string): void {
@@ -164,6 +121,11 @@ export class Graph {
             }
         }
         fs.writeFileSync(filename, output, 'utf-8')
+    }
+
+    private objToMap(): Map<string, Map<string, number>> {
+        const map = new Map()
+        for (let )
     }
 
     getAdjacencyList(): Map<string, Map<string, number>> {

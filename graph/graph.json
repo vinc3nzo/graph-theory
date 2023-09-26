@@ -1,0 +1,14 @@
+{
+  "weighted": true,
+  "oriented": true,
+  "adj": {
+    "a": {
+      "b": 1,
+      "c": 2
+    },
+    "b": {
+      "e": 5
+    },
+    "c": {}
+  }
+}

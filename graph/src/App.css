@@ -1,0 +1,47 @@
+@import '../node_modules/normalize.css/normalize.css';
+
+#app {
+
+}
+
+#app header {
+    width: 100%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    top: 0;
+}
+
+#app header h2 {
+    text-align: center;
+}
+
+#app main {
+    width: 100%;
+}
+
+#app .controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    bottom: 0;
+}
+
+#app .control {
+    display: inline-grid;
+    grid-column: span 2;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
+    padding: 1em;
+}
+
+#app .control label {
+    text-align: center;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+#app button {
+    padding: 0.5em;
+    margin: 1em;
+}
