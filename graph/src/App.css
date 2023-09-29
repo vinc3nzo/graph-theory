@@ -15,6 +15,10 @@
     text-align: center;
 }
 
+#app hr {
+    width: 0.5em;
+}
+
 #app main {
     width: 100%;
 }
@@ -44,4 +48,10 @@
 #app button {
     padding: 0.5em;
     margin: 1em;
+}
+
+#app hr {
+    width: 90%;
+    margin-top: 2em;
+    margin-bottom: 1em;
 }

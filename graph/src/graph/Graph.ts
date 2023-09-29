@@ -128,6 +128,13 @@ export class Graph {
         return this.adj.has(a) && this.adj.get(a)!.has(b)
     }
 
+    getAdjacent(label: string): Map<string, number> {
+        if (!this.adj.has(label)) {
+            throw new NodeNotExists(label)
+        }
+        return this.adj.get(label)!
+    }
+
     private loadFromFile(content: string) {
         const obj: any = JSON.parse(content)
         this.weighted = obj.weighted

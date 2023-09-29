@@ -1,0 +1,33 @@
+@import '../node_modules/normalize.css/normalize.css';
+
+#task-two {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#task-two .description {
+    align-items: normal;
+    width: 90%;
+}
+
+#task-two .data {
+    padding-bottom: 2em;
+    display: flex;
+    align-items: center;
+    flex-direction: column
+}
+
+#task-two .data .input {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#task-two .data .output {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}

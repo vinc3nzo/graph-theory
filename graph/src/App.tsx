@@ -13,7 +13,9 @@ import {
   TableRow,
   TextField
 } from "@mui/material";
-import {GraphError} from "./graph/error/GraphError";
+import {GraphError} from "./graph/error/GraphError"
+import TaskOne from "./TaskOne"
+import TaskTwo from "./TaskTwo"
 
 type Record = [string, [string, number][]]
 
@@ -278,34 +280,43 @@ function App() {
         </div>
       </div>
       <main style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-        <Table style={{maxWidth: '40%'}}>
-          <TableHead>
-            <TableRow>
-              <TableCell align='right'><b>Вершина</b></TableCell>
-              <TableCell align='left'><b>Связи</b></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {adjList.map(item => {
-              let connections = ''
-              for (const conn of item[1]) {
-                connections += conn[0]
-                if (graph.current.isWeighted()) {
-                  connections += '[' + conn[1] + ']'
+        <div id='connections'>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align='right'><b>Вершина</b></TableCell>
+                <TableCell align='left'><b>Связи</b></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {adjList.map(item => {
+                let connections = ''
+                for (const conn of item[1]) {
+                  connections += conn[0]
+                  if (graph.current.isWeighted()) {
+                    connections += '[' + conn[1] + ']'
+                  }
+                  connections += ' '
                 }
-                connections += ' '
-              }
 
-              return (
-                <TableRow key={item[0]}>
-                  <TableCell align='right'>{item[0]}</TableCell>
-                  <TableCell align='left'>{connections}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+                return (
+                  <TableRow key={item[0]}>
+                    <TableCell align='right'>{item[0]}</TableCell>
+                    <TableCell align='left'>{connections}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </main>
+      <hr />
+      <div id='tasks'>
+        <TaskOne graph={graph} />
+        <hr />
+        <TaskTwo graph={graph} />
+        <hr />
+      </div>
     </div>
   );
 }
