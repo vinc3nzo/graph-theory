@@ -1,6 +1,6 @@
 import {
     ConnectionAlreadyExists,
-    ConnectionNotExists,
+    ConnectionNotExists, InvalidOperandTypes,
     NodeAlreadyExists,
     NodeNotExists,
     WeightsInNonWeightedGraph
@@ -182,5 +182,34 @@ export class Graph {
             map.set(key, innerMap)
         }
         return map
+    }
+
+    intersect(other: Graph): Graph {
+        if (!this.oriented || !other.oriented) {
+            throw new InvalidOperandTypes()
+        }
+
+        const res = new Graph(this.weighted || other.weighted, true)
+        const intersection = new Map<string, Map<string, number>>()
+
+        const commonNodes = Array.from(this.adj.keys()).filter(node => other.adj.has(node))
+
+        for (const node of commonNodes) {
+            const neighborsA = this.adj.get(node) || new Map<string, number>()
+            const neighborsB = other.adj.get(node) || new Map<string, number>()
+            const commonNeighbors = new Map<string, number>()
+
+            for (const [neighbor, weightA] of neighborsA) {
+                if (neighborsB.has(neighbor)) {
+                    const weightB = neighborsB.get(neighbor) || 0
+                    commonNeighbors.set(neighbor, Math.min(weightA, weightB))
+                }
+            }
+
+            intersection.set(node, commonNeighbors)
+        }
+
+        res.adj = intersection
+        return res
     }
 }

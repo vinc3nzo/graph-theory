@@ -8,7 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskOne.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskOne.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskOne.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskOne.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskTwo.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskTwo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskTwo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskTwo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/graph/Graph.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/graph/Graph.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graph/error/GraphError.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/graph/error/GraphError.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,10 +54,15 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;watcher.settings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/evgeny/Workspace/graph-theory/graph/node_modules/typescript/lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/vinc3nzo/Practice/graph-theory/graph/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/util" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -64,6 +74,8 @@
       <workItem from="1695716611175" duration="23664000" />
       <workItem from="1695986109782" duration="8783000" />
       <workItem from="1695995650586" duration="3219000" />
+      <workItem from="1696062041030" duration="4459000" />
+      <workItem from="1696261802931" duration="14419000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,5 @@
-@import '../node_modules/normalize.css/normalize.css';
 
-#task-two {
+#task-three {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -8,24 +7,30 @@
     align-items: center;
 }
 
-#task-two .description {
+#task-three .data {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#task-three .description {
     align-items: normal;
     width: 90%;
 }
 
-#task-two .data {
+#task-three .data {
     padding-bottom: 1em;
     display: flex;
     gap: 1em;
 }
 
-#task-two .data .input {
+#task-three .data .input {
     display: flex;
     align-items: center;
     gap: 1em;
 }
 
-#task-two .data .output {
+#task-three .data .output {
     display: flex;
     align-items: center;
     gap: 1em;

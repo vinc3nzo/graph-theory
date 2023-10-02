@@ -1,9 +1,5 @@
 @import '../node_modules/normalize.css/normalize.css';
 
-#app {
-
-}
-
 #app header {
     width: 100%;
     padding-top: 1em;
@@ -27,16 +23,15 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    bottom: 0;
 }
 
 #app .control {
-    display: inline-grid;
-    grid-column: span 2;
-    justify-items: center;
+    display: flex;
     align-items: center;
-    grid-template-columns: 0.5fr 1fr 0.5fr;
-    padding: 1em;
+    justify-content: center;
+    gap: 0.5em;
+    width: 100%;
+    padding: 1em 1em;
 }
 
 #app .control label {
@@ -47,11 +42,16 @@
 
 #app button {
     padding: 0.5em;
-    margin: 1em;
 }
 
 #app hr {
     width: 90%;
     margin-top: 2em;
     margin-bottom: 1em;
+}
+
+#connections {
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }

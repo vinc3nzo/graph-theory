@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
-import {Graph} from "./graph/Graph";
 import {
   Button,
   InputLabel,
@@ -13,9 +12,15 @@ import {
   TableRow,
   TextField
 } from "@mui/material";
+
+import {Graph} from "./graph/Graph"
 import {GraphError} from "./graph/error/GraphError"
 import TaskOne from "./TaskOne"
 import TaskTwo from "./TaskTwo"
+import TaskThree from "./TaskThree"
+import GraphLoader from "./util/GraphLoader"
+import GraphDumper from "./util/GraphDumper"
+import GraphView from "./GraphView";
 
 type Record = [string, [string, number][]]
 
@@ -29,7 +34,6 @@ function App() {
   const [connNodeWeight, setConnNodeWeight] = useState<number | null>(null)
   const [delConnA, setDelConnA] = useState<string>('')
   const [delConnB, setDelConnB] = useState<string>('')
-  const [jsonFileContent, setJsonFileContent] = useState<any>(null)
   const [shouldRerender, setShouldRerender] = useState<boolean>(true)
 
   const orientedSelection = useRef('unoriented')
@@ -123,62 +127,30 @@ function App() {
     setShouldRerender(true)
   }
 
-  function onFileInputChange(input: any) {
-    let file = input.files[0];
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader()
-      // @ts-ignore
-      fileReader.onload = event => resolve(JSON.parse(event.target.result))
-      fileReader.onerror = error => reject(error)
-      fileReader.readAsText(file)
-      fileReader.onload = function() {
-        // @ts-ignore
-        setJsonFileContent(fileReader.result)
-      };
-    })
-  }
+  function onGraphLoaded(fileContent: string) {
+    try {
+      graph.current = new Graph(fileContent)
+    }
+    catch (e) {
+      alert('Неверный формат файла!')
+      return
+    }
 
-  function onCreateGraphFromJson() {
-    if (jsonFileContent) {
-      try {
-        graph.current = new Graph(jsonFileContent)
-      }
-      catch (e) {
-        alert('Неверный формат файла!')
-      }
-
-      if (graph.current.isOriented()) {
-        orientedSelection.current = 'oriented'
-      }
-      else {
-        orientedSelection.current = 'unoriented'
-      }
-
-      if (graph.current.isWeighted()) {
-        weightedSelection.current = 'weighted'
-      }
-      else {
-        weightedSelection.current = 'non-weighted'
-      }
-
-      setJsonFileContent(null)
-      setShouldRerender(true)
+    if (graph.current.isOriented()) {
+      orientedSelection.current = 'oriented'
     }
     else {
-      alert('Загрузите файл!')
+      orientedSelection.current = 'unoriented'
     }
-  }
 
-  function onWriteGraphToFile() {
-    const graphStr = graph.current.dump()
-    const blob = new Blob([graphStr], {type: "application/json;charset=utf-8"})
-    const url = URL.createObjectURL(blob)
-    const elem = document.createElement("a")
-    elem.href = url
-    elem.download = 'graph.json'
-    document.body.appendChild(elem)
-    elem.click()
-    document.body.removeChild(elem)
+    if (graph.current.isWeighted()) {
+      weightedSelection.current = 'weighted'
+    }
+    else {
+      weightedSelection.current = 'non-weighted'
+    }
+
+    setShouldRerender(true)
   }
 
   function onGraphOrientedChange(value: string) {
@@ -216,9 +188,8 @@ function App() {
           </Select>
         </div>
         <div className='control' style={{gridTemplateColumns: '1fr 1fr 1fr', gridColumnStart: '2', gridColumnEnd: '6'}}>
-          <TextField type={'file'} onChange={e => onFileInputChange(e.target)}>Загрузить из файла</TextField>
-          <Button onClick={onCreateGraphFromJson}>Загрузить граф из файла</Button>
-          <Button onClick={onWriteGraphToFile}>Записать граф в файл</Button>
+          <GraphLoader onGraphLoaded={onGraphLoaded} />
+          <GraphDumper graph={graph} />
         </div>
         <div className='control' style={{gridColumnStart: '2', gridColumnEnd: '4'}}>
           <InputLabel>Создать узел</InputLabel>
@@ -281,40 +252,16 @@ function App() {
       </div>
       <main style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
         <div id='connections'>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell align='right'><b>Вершина</b></TableCell>
-                <TableCell align='left'><b>Связи</b></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {adjList.map(item => {
-                let connections = ''
-                for (const conn of item[1]) {
-                  connections += conn[0]
-                  if (graph.current.isWeighted()) {
-                    connections += '[' + conn[1] + ']'
-                  }
-                  connections += ' '
-                }
-
-                return (
-                  <TableRow key={item[0]}>
-                    <TableCell align='right'>{item[0]}</TableCell>
-                    <TableCell align='left'>{connections}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
+          <GraphView graph={graph} />
         </div>
       </main>
       <hr />
       <div id='tasks'>
-        <TaskOne graph={graph} />
+        <TaskOne />
         <hr />
-        <TaskTwo graph={graph} />
+        <TaskTwo />
+        <hr />
+        <TaskThree />
         <hr />
       </div>
     </div>

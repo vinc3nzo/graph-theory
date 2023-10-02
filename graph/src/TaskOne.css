@@ -15,4 +15,6 @@
 
 #task-one .data {
     padding-bottom: 2em;
+    display: flex;
+    gap: 1em;
 }

@@ -29,3 +29,9 @@ export class WeightsInNonWeightedGraph extends GraphError {
         super('Попытка использовать вес в невзвешенном графе.');
     }
 }
+
+export class InvalidOperandTypes extends GraphError {
+    constructor() {
+        super('Неверные типы операндов.');
+    }
+}
