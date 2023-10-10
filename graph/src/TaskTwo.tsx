@@ -1,7 +1,7 @@
 import './TaskTwo.css'
-import React, {MutableRefObject, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Graph} from "./graph/Graph";
-import {Button, InputLabel, Table, TableBody, TableCell, TableHead, TableRow, TextField} from "@mui/material";
+import {Button, InputLabel, TextField} from "@mui/material";
 import {GraphError} from "./graph/error/GraphError";
 import GraphLoader from "./util/GraphLoader";
 import GraphView from "./GraphView";

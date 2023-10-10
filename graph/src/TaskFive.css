@@ -1,0 +1,41 @@
+@import '../node_modules/normalize.css/normalize.css';
+
+#task-five {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#task-five .description {
+    align-items: normal;
+    width: 90%;
+}
+
+#task-five .data {
+    padding-bottom: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+#task-five .data .input {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#task-five .data .output {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#task-five .data .node-name-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}

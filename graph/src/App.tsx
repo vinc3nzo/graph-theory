@@ -5,11 +5,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   TextField
 } from "@mui/material";
 
@@ -18,15 +13,14 @@ import {GraphError} from "./graph/error/GraphError"
 import TaskOne from "./TaskOne"
 import TaskTwo from "./TaskTwo"
 import TaskThree from "./TaskThree"
+import TaskFour from "./TaskFour"
 import GraphLoader from "./util/GraphLoader"
 import GraphDumper from "./util/GraphDumper"
-import GraphView from "./GraphView";
-
-type Record = [string, [string, number][]]
+import GraphView from "./GraphView"
+import TaskFive from "./TaskFive";
 
 function App() {
   const graph = useRef(new Graph(false, false))
-  const [adjList, setAdjList] = useState<Record[]>(graph.current.getAdjacencyList())
   const [newNode, setNewNode] = useState<string>('')
   const [deleteNode, setDeleteNode] = useState<string>('')
   const [connNodeA, setConnNodeA] = useState<string>('')
@@ -40,10 +34,6 @@ function App() {
   const weightedSelection = useRef('non-weighted')
 
   useEffect(() => {
-      if (shouldRerender) {
-        const adj = graph.current.getAdjacencyList()
-        setAdjList(adj)
-      }
       setShouldRerender(false)
     }, [shouldRerender]
   )
@@ -262,6 +252,10 @@ function App() {
         <TaskTwo />
         <hr />
         <TaskThree />
+        <hr />
+        <TaskFour />
+        <hr />
+        <TaskFive />
         <hr />
       </div>
     </div>

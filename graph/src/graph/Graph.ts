@@ -212,4 +212,58 @@ export class Graph {
         res.adj = intersection
         return res
     }
+
+    public connectedComponents(): number {
+        const visited: Set<string> = new Set()
+
+        let count = 0 // количество компонент
+        for (const node of this.adj.keys()) {
+            if (!visited.has(node)) { // если еще не посетили, выполнить DFS
+                count++ // новая компонента
+                this.dfs(node, visited) // DFS посещаем все узлы в этой компоненте связности
+            }
+        }
+
+        return count
+    }
+
+    private dfs(node: string, visited: Set<string>) {
+        visited.add(node)
+
+        const neighbors = this.adj.get(node)!
+        for (const neighbor of neighbors.keys()) {
+            if (!visited.has(neighbor)) {
+                this.dfs(neighbor, visited) // рекурсивно обойти соседние узлы
+            }
+        }
+    }
+
+    public shortestPathLengthsFrom(u: string): Map<string, number> {
+        if (!this.adj.has(u)) {
+            throw new NodeNotExists(u)
+        }
+
+        const shortestPaths: Map<string, number> = new Map()
+
+        for (const node of this.adj.keys()) {
+            shortestPaths.set(node, -1) // пока считаем, что расстояния до других узлов -1
+        }
+        shortestPaths.set(u, 0) // расстояние до самого себя 0
+
+        const queue = [u] // очередь обхода
+        while (queue.length > 0) {
+            const currentNode = queue.shift()!
+            const neighbors = this.adj.get(currentNode)!
+
+            for (const neighbor of neighbors.keys()) {
+                if (shortestPaths.get(neighbor) === -1) { // если узел еще не был посещен
+                    // установить кратчайшее расстояние до него
+                    shortestPaths.set(neighbor, shortestPaths.get(currentNode)! + 1)
+                    queue.push(neighbor) // добавить соседний узел в очередь обхода
+                }
+            }
+        }
+
+        return shortestPaths
+    }
 }
