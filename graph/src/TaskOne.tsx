@@ -32,6 +32,36 @@ function TaskOne() {
     setShouldRerender(true)
   }
 
+  function VertexPowers() {
+    const adjList = graph.current!.getAdjacencyList()
+    const powers = new Map()
+
+    for (const [k, v] of adjList) {
+      powers.set(k, v.length)
+      for (const [otherK, otherV] of adjList) {
+        if (k === otherK) continue
+
+        if (otherV.find(value => value[0] === k)) {
+          powers.set(k, powers.get(k) + 1)
+        }
+      }
+    }
+
+    return (
+      <TableBody>
+        {graph.current!.getAdjacencyList().map(item => {
+          return (
+            <TableRow key={item[0]}>
+              <TableCell align='right'>{item[0]}</TableCell>
+              <TableCell align='left'>{powers.get(item[0])}</TableCell>
+            </TableRow>
+          )
+        })
+        }
+      </TableBody>
+    )
+  }
+
   return (
     <div id='task-one'>
       <div className='description'>
@@ -52,17 +82,7 @@ function TaskOne() {
                   <TableCell align='left'><b>Степень</b></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {graph.current!.getAdjacencyList().map(item => {
-                    return (
-                      <TableRow key={item[0]}>
-                        <TableCell align='right'>{item[0]}</TableCell>
-                        <TableCell align='left'>{item[1].length}</TableCell>
-                      </TableRow>
-                    )
-                  })
-                }
-              </TableBody>
+              <VertexPowers />
             </Table>
           </>
         }
