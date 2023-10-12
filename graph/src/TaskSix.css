@@ -1,0 +1,29 @@
+@import '../node_modules/normalize.css/normalize.css';
+
+#task-six {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+#task-six .description {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+}
+
+#task-six .task {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+#task-six .output {
+    display: flex;
+    gap: 1em;
+}
