@@ -26,6 +26,8 @@ function TaskFive() {
       return
     }
 
+    lengths.current = null
+
     setShouldRerender(true)
   }
 

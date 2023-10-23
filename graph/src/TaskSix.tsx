@@ -6,7 +6,7 @@ import GraphView from "./GraphView";
 
 function TaskSix() {
   const graph = useRef<Graph | null>(null)
-  const resTree = useRef<Graph | null>(null)
+  const resMst = useRef<Graph | null>(null)
   const [shouldRerender, setShouldRerender] = useState<boolean>(false)
 
   useEffect(() => {
@@ -29,6 +29,8 @@ function TaskSix() {
       return
     }
 
+    resMst.current = graph.current?.mst()
+
     setShouldRerender(true)
   }
 
@@ -45,12 +47,13 @@ function TaskSix() {
         <GraphLoader onGraphLoaded={onGraphLoaded}/>
         {
           !graph.current
-          ? <p>Загрузите описание взвешенного неориентированного графа.</p>
-          :
-            <div className='output'>
-              <GraphView maxWidth='80%' graph={graph} />
-              <GraphView maxWidth='80%' graph={resTree} />
-            </div>
+          ? (<p>Загрузите описание взвешенного неориентированного графа.</p>)
+          : (
+              <div className='output'>
+                <GraphView maxWidth='80%' graph={graph} />
+                <GraphView maxWidth='80%' graph={resMst} />
+              </div>
+            )
         }
       </div>
     </div>

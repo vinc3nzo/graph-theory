@@ -1,11 +1,17 @@
 import {
     ConnectionAlreadyExists,
-    ConnectionNotExists, InvalidOperandTypes,
+    ConnectionNotExists, GraphIsEmpty, GraphIsNotConnected, GraphNotWeightedUnoriented, InvalidOperandTypes,
     NodeAlreadyExists,
     NodeNotExists,
     WeightsInNonWeightedGraph
 } from "./error/GraphError";
 
+
+type Edge = {
+    from: string,
+    to: string,
+    weight: number,
+}
 
 export class Graph {
 
@@ -265,5 +271,52 @@ export class Graph {
         }
 
         return shortestPaths
+    }
+
+    public mst(): Graph {
+        if (!this.weighted || this.oriented) {
+            throw new GraphNotWeightedUnoriented()
+        }
+
+        const mst = new Graph(true, false) // минимальное остовное дерево
+        const visited = new Set<string>() // множество посещенных вершин
+
+        // взять любую вершину как начальную (здесь первая)
+        const startVertex = this.adj.keys().next().value
+        if (!startVertex) {
+            throw new GraphIsEmpty()
+        }
+        visited.add(startVertex)
+        mst.addNode(startVertex)
+
+        while (visited.size < this.adj.size) { // пока не посетим все вершины
+            // ребра, которые соединяют посещенные вершины с непосещенными
+            const edges: Array<Edge> = []
+
+            for (const vertex of visited) { // найти такие ребра
+                for (const [neighbor, weight] of this.adj.get(vertex)!) {
+                    if (!visited.has(neighbor)) {
+                        edges.push({ from: vertex, to: neighbor, weight });
+                    }
+                }
+            }
+
+            if (edges.length === 0) {
+                // Не все вершины еще посещены, но мы не смогли найти новые ребра.
+                // Это значит, что граф несвязный.
+                throw new GraphIsNotConnected()
+            }
+
+            // выбрать ребро с наименьшим весом
+            edges.sort((a, b) => a.weight - b.weight)
+            const { from, to, weight } = edges[0]
+
+            // добавить ребро в минимальное остовное дерево
+            mst.addNode(to)
+            mst.connect(from, to, weight)
+            visited.add(to)
+        }
+
+        return mst
     }
 }

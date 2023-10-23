@@ -35,3 +35,21 @@ export class InvalidOperandTypes extends GraphError {
         super('Неверные типы операндов.');
     }
 }
+
+export class GraphNotWeightedUnoriented extends GraphError {
+    constructor() {
+        super('Операция может быть выполнена только для взвешенного неориентированного графа.')
+    }
+}
+
+export class GraphIsEmpty extends GraphError {
+    constructor() {
+        super('Операция может быть выполнена только на непустом графе.')
+    }
+}
+
+export class GraphIsNotConnected extends GraphError {
+    constructor() {
+        super('Граф несвязный.')
+    }
+}

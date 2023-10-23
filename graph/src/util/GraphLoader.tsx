@@ -21,6 +21,7 @@ function GraphLoader({ onGraphLoaded }: GraphLoaderProps) {
           onGraphLoaded(jsonContent)
         } catch (error) {
           setFileContent(null)
+          console.error(error)
           alert('Ошибка при парсинге файла. Это точно текстовый файл?')
         }
       }
@@ -30,9 +31,9 @@ function GraphLoader({ onGraphLoaded }: GraphLoaderProps) {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em'}}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em' }}>
       {fileContent
-        ? <InputLabel>Файл успешно загружен.</InputLabel>
+        ? <InputLabel>Файл загружен.</InputLabel>
         : <InputLabel>Загрузите файл...</InputLabel>
       }
       <input type="file" accept=".json" onChange={handleFileChange} />
