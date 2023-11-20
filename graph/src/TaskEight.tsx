@@ -3,8 +3,8 @@ import {Graph} from './graph/Graph'
 import React, {useEffect, useRef, useState} from 'react'
 import GraphLoader from "./util/GraphLoader"
 import GraphView from "./GraphView"
-import { GraphError } from "./graph/error/GraphError"
 import {Button, InputLabel, TextField} from "@mui/material";
+import {GraphError} from "./graph/error/GraphError";
 
 function TaskEight() {
   const graph = useRef<Graph | null>(null)
@@ -26,8 +26,8 @@ function TaskEight() {
       return
     }
 
-    if (graph.current!.isOriented() || !graph.current!.isWeighted()) {
-      alert('В задании требуется взвешенный неориентированный граф.')
+    if (!graph.current!.isWeighted()) {
+      alert('В задании требуется взвешенный граф.')
       return
     }
 
@@ -37,7 +37,18 @@ function TaskEight() {
   }
 
   function onRunClick() {
-    setAnswer(graph.current!.taskEight(p))
+    try {
+      setAnswer(graph.current!.taskEight(p))
+    }
+    catch (e) {
+      if (e instanceof GraphError) {
+        alert(e.message)
+        return
+      }
+      else {
+        throw e
+      }
+    }
   }
 
   return (
@@ -49,7 +60,7 @@ function TaskEight() {
       <div className='data'>
         <GraphLoader onGraphLoaded={onGraphLoaded} />
         { !graph.current
-          ? <p>Загрузите описание взвешенного неориентированного графа.</p>
+          ? <p>Загрузите описание взвешенного графа.</p>
           :
           <>
             <div className='input'>

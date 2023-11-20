@@ -1,6 +1,11 @@
 import {
     ConnectionAlreadyExists,
-    ConnectionNotExists, GraphIsEmpty, GraphIsNotConnected, GraphNotWeightedUnoriented, InvalidOperandTypes,
+    ConnectionNotExists,
+    GraphHasNegativeLoops, GraphHasNegativeWeights,
+    GraphIsEmpty,
+    GraphIsNotConnected,
+    GraphNotWeightedUnoriented,
+    InvalidOperandTypes,
     NodeAlreadyExists,
     NodeNotExists,
     WeightsInNonWeightedGraph
@@ -334,8 +339,6 @@ export class Graph {
      * @param P
      */
     taskEight(P: number): boolean {
-        console.log(`taskEight called with param P = ${P}`)
-
         /**
          * Вспомогательная функция для определения вершины, до которой
          * путь кратчайший. Возвращает `null`, если пути вообще нет.
@@ -361,12 +364,11 @@ export class Graph {
          * @param source начальная вершина
          */
         const dijkstra = (source: string): Map<string, number> => {
-            console.log("Adj is:", this.adj)
             const dist: Map<string, number> = new Map()  // расстояния до других вершин
             const visited: Set<string> = new Set()  // для контроля уже посещенных вершин
 
             // инициализируем расстояния бесконечностью
-            for (const [vertex, _] of this.adj) {
+            for (const vertex of this.adj.keys()) {
                 dist.set(vertex, Infinity)
             }
 
@@ -380,7 +382,11 @@ export class Graph {
 
                 visited.add(u)
 
-                for (const [v, weight] of this.adj.get(u)!) {
+                for (const [v, weight] of this.adj.get(u)!.entries()) {
+                    if (weight < 0) {
+                        throw new GraphHasNegativeWeights()
+                    }
+
                     const newDist = dist.get(u)! + weight
                     if (newDist < dist.get(v)!) {
                         dist.set(v, newDist)
@@ -391,14 +397,11 @@ export class Graph {
             return dist
         }
 
-        console.log(`Iterating through vertices:`, this.adj.keys())
         // вычислить сумму длин кратчайших путей для каждой вершины
         for (const vertex of this.adj.keys()) {
             const dist = dijkstra(vertex)
-            console.log(`[${vertex}] Dijkstra returned:`, dist)
             const sum = Array.from(dist.values())
                 .reduce((acc, val) => acc + val, 0)
-            console.log(`[${vertex}] sum = ${sum}`)
 
             if (sum > P) {
                 return false
@@ -406,5 +409,61 @@ export class Graph {
         }
 
         return true
+    }
+
+    /**
+     * Метод, возвращающий для данной вершины кратчайшие пути до других
+     * вершин. При этом в графе могут присутствовать отрицательные веса,
+     * но не может быть отрицательных циклов. Реализация построена
+     * на основе алгоритма Беллмана-Форда.
+     *
+     * @param sourceVertex вершина, от которой искать кратчайшие пути
+     */
+    taskNine(sourceVertex: string): Map<string, { distance: number, path: string[] }> {
+        if (!this.exists(sourceVertex)) {
+            throw new NodeNotExists(sourceVertex)
+        }
+
+        const paths: Map<string, { distance: number, path: string[] }> = new Map()
+
+        // инициализировать расстояния до всех вершин бесконечностью, кроме начальной вершины
+        for (const vertex of this.adj.keys()) {
+            paths.set(vertex, {
+                distance: Infinity,
+                path: []
+            })
+        }
+        paths.set(sourceVertex, { distance: 0, path: [] })
+
+        // релаксация ребер
+        for (let i = 0; i < this.adj.size - 1; i++) {
+            for (const [u, neighbors] of this.adj.entries()) {
+                for (const [v, weight] of neighbors.entries()) {
+                    const uDist = paths.get(u)!.distance
+                    const vDist = paths.get(v)!.distance
+
+                    if (uDist + weight < vDist) {  // если d(u) + w < d(v)
+                        paths.set(v, {
+                            distance: uDist + weight,
+                            path: [...paths.get(u)!.path, u]
+                        })  // то d(v) <- d(u) + w
+                    }
+                }
+            }
+        }
+
+        // проверка на отрицательные циклы
+        for (const [u, neighbors] of this.adj.entries()) {
+            for (const [v, weight] of neighbors.entries()) {
+                const uDist = paths.get(u)!.distance
+                const vDist = paths.get(v)!.distance
+
+                if (uDist + weight < vDist) {
+                    throw new GraphHasNegativeLoops()
+                }
+            }
+        }
+
+        return paths
     }
 }

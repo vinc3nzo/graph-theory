@@ -53,3 +53,15 @@ export class GraphIsNotConnected extends GraphError {
         super('Граф несвязный.')
     }
 }
+
+export class GraphHasNegativeWeights extends GraphError {
+    constructor() {
+        super('В графе есть отрицательные веса.')
+    }
+}
+
+export class GraphHasNegativeLoops extends GraphError {
+    constructor() {
+        super('В графе есть отрицательные циклы.')
+    }
+}

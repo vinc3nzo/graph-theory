@@ -20,6 +20,7 @@ import GraphView from "./GraphView"
 import TaskFive from "./TaskFive"
 import TaskSix from "./TaskSix"
 import TaskEight from "./TaskEight"
+import TaskNine from "./TaskNine"
 
 function App() {
   const graph = useRef(new Graph(false, false))
@@ -262,6 +263,8 @@ function App() {
         <TaskSix />
         <hr />
         <TaskEight />
+        <hr />
+        <TaskNine />
         <hr />
       </div>
     </div>
