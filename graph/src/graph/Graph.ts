@@ -30,6 +30,13 @@ export class Graph {
         }
         else if (typeof arg1 === 'string' && arg2 == null) {
             this.loadFromFile(arg1)
+            if (!this.oriented) {
+                for (const [v, neighbors] of this.adj) {
+                    for (const [u, w] of neighbors) {
+                        this.adj.get(u)!.set(v, w)
+                    }
+                }
+            }
         }
         else if (arg1 instanceof Graph && arg2 == null) {
             this.weighted = arg1.weighted
@@ -318,5 +325,86 @@ export class Graph {
         }
 
         return mst
+    }
+
+    /**
+     * Метод, определяющий, есть ли в графе вершина такая, что сумма
+     * длин кратчайших путей от нее до всех остальных вершин
+     * не превышает `P`. Построен на основе алгоритма Дейкстры.
+     * @param P
+     */
+    taskEight(P: number): boolean {
+        console.log(`taskEight called with param P = ${P}`)
+
+        /**
+         * Вспомогательная функция для определения вершины, до которой
+         * путь кратчайший. Возвращает `null`, если пути вообще нет.
+         * @param dist расстояния до других вершин
+         * @param visited множество посещенных
+         */
+        const minDistance = (dist: Map<string, number>, visited: Set<string>): string | null => {
+            let min = Infinity  // минимальное расстояние
+            let minVertex: string | null = null  // метка вершины, до которой расстояние минимальное
+
+            for (const vertex of this.adj.keys()) {
+                if (!visited.has(vertex) && dist.get(vertex)! <= min) {
+                    min = dist.get(vertex)!
+                    minVertex = vertex
+                }
+            }
+
+            return minVertex
+        }
+
+        /**
+         * Алгоритм Дейкстры нахождения кратчайших путей.
+         * @param source начальная вершина
+         */
+        const dijkstra = (source: string): Map<string, number> => {
+            console.log("Adj is:", this.adj)
+            const dist: Map<string, number> = new Map()  // расстояния до других вершин
+            const visited: Set<string> = new Set()  // для контроля уже посещенных вершин
+
+            // инициализируем расстояния бесконечностью
+            for (const [vertex, _] of this.adj) {
+                dist.set(vertex, Infinity)
+            }
+
+            dist.set(source, 0)  // расстояние до самой себя 0
+
+            for (let i = 0; i < this.adj.size - 1; i++) {
+                const u = minDistance(dist, visited)
+                if (u === null) {
+                    break  // если нет путей в непосещенные вершины
+                }
+
+                visited.add(u)
+
+                for (const [v, weight] of this.adj.get(u)!) {
+                    const newDist = dist.get(u)! + weight
+                    if (newDist < dist.get(v)!) {
+                        dist.set(v, newDist)
+                    }
+                }
+            }
+
+            return dist
+        }
+
+        console.log(`Iterating through vertices:`, this.adj.keys())
+        // вычислить сумму длин кратчайших путей для каждой вершины
+        for (const vertex of this.adj.keys()) {
+            const dist = dijkstra(vertex)
+            console.log(`[${vertex}] Dijkstra returned:`, dist)
+            const sum = Array.from(dist.values())
+                .reduce((acc, val) => acc + val, 0)
+            console.log(`[${vertex}] sum = ${sum}`)
+
+            if (sum > P) {
+                return false
+            }
+        }
+
+        return true
     }
 }

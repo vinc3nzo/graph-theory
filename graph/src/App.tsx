@@ -17,8 +17,9 @@ import TaskFour from "./TaskFour"
 import GraphLoader from "./util/GraphLoader"
 import GraphDumper from "./util/GraphDumper"
 import GraphView from "./GraphView"
-import TaskFive from "./TaskFive";
-import TaskSix from "./TaskSix";
+import TaskFive from "./TaskFive"
+import TaskSix from "./TaskSix"
+import TaskEight from "./TaskEight"
 
 function App() {
   const graph = useRef(new Graph(false, false))
@@ -259,6 +260,8 @@ function App() {
         <TaskFive />
         <hr />
         <TaskSix />
+        <hr />
+        <TaskEight />
         <hr />
       </div>
     </div>
