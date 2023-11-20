@@ -28,6 +28,7 @@ function TaskEight() {
 
     if (!graph.current!.isWeighted()) {
       alert('В задании требуется взвешенный граф.')
+      graph.current = null
       return
     }
 

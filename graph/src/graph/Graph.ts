@@ -336,6 +336,7 @@ export class Graph {
      * Метод, определяющий, есть ли в графе вершина такая, что сумма
      * длин кратчайших путей от нее до всех остальных вершин
      * не превышает `P`. Построен на основе алгоритма Дейкстры.
+     * В графе не может быть отрицательных весов.
      * @param P
      */
     taskEight(P: number): boolean {
@@ -414,7 +415,8 @@ export class Graph {
     /**
      * Метод, возвращающий для данной вершины кратчайшие пути до других
      * вершин. При этом в графе могут присутствовать отрицательные веса,
-     * но не может быть отрицательных циклов. Реализация построена
+     * но не может быть отрицательных циклов. В графе могут быть отрицательные
+     * веса, но не может быть отрицательных циклов. Реализация построена
      * на основе алгоритма Беллмана-Форда.
      *
      * @param sourceVertex вершина, от которой искать кратчайшие пути
@@ -465,5 +467,80 @@ export class Graph {
         }
 
         return paths
+    }
+
+    /**
+     * Метод, который находит кратчайший путь между двумя данными
+     * вершинами `u` и `v`. В графе могут быть отрицательные циклы.
+     * Реализация построена на алгоритме Флойда.
+     * @param u начальная вершина
+     * @param v конечная вершина
+     */
+    public taskTen(u: string, v: string): { distance: number; path: string[] } {
+        if (!this.exists(u)) {
+            throw new NodeNotExists(u)
+        }
+        if (!this.exists(v)) {
+            throw new NodeNotExists(v)
+        }
+
+        // Map, связывающая строковую метку вершины с числом
+        const indexOf = new Map(Array.from(this.adj.keys()).map((v, i) => [v, i]))
+        const labelOf = new Map(Array.from(this.adj.keys()).map((v, i) => [i, v]))
+        // Список смежности, только метки теперь числа
+        const adj = new Map(Array.from(this.adj.entries()).map((v, i) =>
+            [i, new Map(Array.from(v[1]).map(v => [indexOf.get(v[0])!, v[1]]))]
+        ))
+        const vertices = Array.from(adj.keys())
+
+        // инициализировать матрицу расстояний и матрицу следующих вершин
+        const dist: number[][] = []
+        const next: (number | null)[][] = []
+
+        for (const i of vertices) {
+            dist[i] = []
+            next[i] = []
+            for (const j of vertices) {
+                dist[i][j] = i === j ? 0 : Infinity
+                next[i][j] = null
+            }
+        }
+
+        // заполнить матрицу расстояний на основе весов списка смежности
+        for (const [src, neighbors] of adj.entries()) {
+            for (const [dst, weight] of neighbors.entries()) {
+                dist[src][dst] = weight
+                next[src][dst] = dst // установить следующую вершину в соответствии с ребром
+            }
+        }
+
+        // алгоритм Флойда
+        for (const k of vertices) {
+            for (const i of vertices) {
+                for (const j of vertices) {
+                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j]
+                        next[i][j] = next[i][k]
+                    }
+                }
+            }
+        }
+
+        // построить кратчайший путь
+        const path: string[] = []
+        let current = indexOf.get(u) ?? null
+        let target = indexOf.get(v)!
+
+        while (current !== target) {
+            if (current === null) {
+                // нет пути из `u` в `v`
+                return { distance: Infinity, path: [] }
+            }
+            path.push(labelOf.get(current)!)
+            current = next[current][target]
+        }
+        path.push(labelOf.get(target)!)
+
+        return { distance: dist[indexOf.get(u)!][indexOf.get(v)!], path }
     }
 }

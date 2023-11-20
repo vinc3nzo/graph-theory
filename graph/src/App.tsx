@@ -21,6 +21,7 @@ import TaskFive from "./TaskFive"
 import TaskSix from "./TaskSix"
 import TaskEight from "./TaskEight"
 import TaskNine from "./TaskNine"
+import TaskTen from "./TaskTen";
 
 function App() {
   const graph = useRef(new Graph(false, false))
@@ -265,6 +266,8 @@ function App() {
         <TaskEight />
         <hr />
         <TaskNine />
+        <hr />
+        <TaskTen />
         <hr />
       </div>
     </div>

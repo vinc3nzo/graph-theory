@@ -1,15 +1,16 @@
-import './TaskNine.css'
-import React, {useEffect, useRef, useState} from 'react'
-import {Graph} from "./graph/Graph";
+import './TaskTen.css'
 import GraphLoader from "./util/GraphLoader";
 import GraphView from "./GraphView";
-import {Button, InputLabel, Table, TableBody, TableCell, TableHead, TableRow, TextField} from "@mui/material";
+import {Button, InputLabel, TextField} from "@mui/material";
+import React, {useEffect, useRef, useState} from "react";
+import {Graph} from "./graph/Graph";
 import {GraphError} from "./graph/error/GraphError";
 
-function TaskNine() {
+function TaskTen() {
   const graph = useRef<Graph | null>(null)
-  const [answer, setAnswer] = useState<Map<string, { distance: number, path: string[] }> | null>(null)
+  const [answer, setAnswer] = useState<{ distance: number, path: string[] } | null>(null)
   const [u, setU] = useState<string>('')
+  const [v, setV] = useState<string>('')
   const [shouldRerender, setShouldRerender] = useState<boolean>(false)
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function TaskNine() {
   function onRunClick() {
     let res = null
     try {
-      res = graph.current!.taskNine(u)
+      res = graph.current!.taskTen(u, v)
     }
     catch (e) {
       if (e instanceof GraphError) {
@@ -57,38 +58,11 @@ function TaskNine() {
     setShouldRerender(true)
   }
 
-  function ShortestPaths() {
-    return (
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align='right'><b>Вершина</b></TableCell>
-            <TableCell align='center'><b>Длина</b></TableCell>
-            <TableCell align='left'><b>Кратчайший путь</b></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
-            Array.from(answer!.entries()).map(item => {
-              return (
-                <TableRow key={item[0]}>
-                  <TableCell align='right'>{item[0]}</TableCell>
-                  <TableCell align='center'>{item[1].distance}</TableCell>
-                  <TableCell align='left'>{item[1].path.toString()}</TableCell>
-                </TableRow>
-              )
-            })
-          }
-        </TableBody>
-      </Table>
-    )
-  }
-
   return (
-    <div id='task-nine'>
+    <div id='task-ten'>
       <div className='description'>
-        <h3>9. Веса IV b</h3>
-        <p>14. Вывести кратчайшие пути из вершины u во все остальные вершины.</p>
+        <h3>10. Веса IV c</h3>
+        <p>10. Вывести кратчайший путь из вершины u до вершины v.</p>
       </div>
       <div className='data'>
         <GraphLoader onGraphLoaded={onGraphLoaded} />
@@ -100,17 +74,30 @@ function TaskNine() {
               <GraphView graph={graph} maxWidth='100%' />
             </div>
             <div className='output'>
-              <p>
-                { answer ? <ShortestPaths /> : <></>}
-              </p>
+              { !answer
+                ? <></>
+                :
+                <>
+                  <b>Ответ</b>
+                  <span><b>Длина пути:</b>&nbsp;{answer.distance}</span>
+                  <span><b>Кратчайший путь:</b>&nbsp;{answer.path.toString()}</span>
+                </>
+              }
               <div className='u-input'>
                 <InputLabel><b>u</b></InputLabel>
                 <TextField value={u}
                            type='text'
                            onChange={e => setU(e.target.value)}
                            size='small' />
-                <Button onClick={onRunClick}>Выполнить</Button>
               </div>
+              <div className='v-input'>
+                <InputLabel><b>v</b></InputLabel>
+                <TextField value={v}
+                           type='text'
+                           onChange={e => setV(e.target.value)}
+                           size='small' />
+              </div>
+              <Button onClick={onRunClick}>Выполнить</Button>
             </div>
           </>
         }
@@ -119,4 +106,4 @@ function TaskNine() {
   )
 }
 
-export default TaskNine
+export default TaskTen
