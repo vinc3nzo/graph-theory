@@ -543,4 +543,115 @@ export class Graph {
 
         return { distance: dist[indexOf.get(u)!][indexOf.get(v)!], path }
     }
+
+    /**
+     * Метод, находящий максимальный поток а графе, используя алгоритм
+     * Форда-Фалкерсона.
+     * @param source источник
+     * @param sink сток
+     */
+    public taskEleven(source: string, sink: string): number {
+        if (!this.exists(source)) {
+            throw new NodeNotExists(source)
+        }
+        if (!this.exists(sink)) {
+            throw new NodeNotExists(sink)
+        }
+
+        // создать остаточный граф с теми же вершинами, что и в изначальном
+        const resGraph: Map<string, Map<string, number>> = new Map()
+        for (const [vertex, edges] of this.adj.entries()) {
+            resGraph.set(vertex, new Map(edges))
+        }
+
+        let maxFlow = 0
+
+        // расширять поток, пока есть расширяющий путь
+        let path = this.findAugmentingPath(resGraph, source, sink)
+        while (path.length > 0) {
+            // найти минимальную пропускную способность
+            const minCapacity = this.findMinCapacity(resGraph, path)
+
+            // обновить остаточный граф вычитанием минимальной пропускной способности
+            for (let i = 0; i < path.length - 1; i++) {
+                const u = path[i]
+                const v = path[i + 1]
+
+                resGraph.get(u)!.set(v, resGraph.get(u)!.get(v)! - minCapacity)
+
+                // добавить обратную дугу с отрицательным весом
+                if (!resGraph.has(v)) {
+                    resGraph.set(v, new Map())
+                }
+
+                if (!resGraph.get(v)!.has(u)) {
+                    resGraph.get(v)!.set(u, 0)
+                }
+
+                resGraph.get(v)!.set(u, resGraph.get(v)!.get(u)! + minCapacity)
+            }
+
+            // обновить значение максимального потока
+            maxFlow += minCapacity
+
+            // найти максимальный расширяющий путь
+            path = this.findAugmentingPath(resGraph, source, sink)
+        }
+
+        return maxFlow
+    }
+
+    /**
+     * Метод поиска расширяющих путей, построенный на DFS.
+     * @param graph список смежности
+     * @param source источник
+     * @param sink сток
+     * @private
+     */
+    private findAugmentingPath(graph: Map<string, Map<string, number>>, source: string, sink: string): string[] {
+        const visited: Set<string> = new Set()
+        const path: string[] = []
+
+        this.fordDfs(graph, source, sink, visited, path)
+
+        return path
+    }
+
+    /**
+     * Обход в глубину.
+     */
+    private fordDfs(graph: Map<string, Map<string, number>>, current: string, sink: string, visited: Set<string>, path: string[]): void {
+        visited.add(current)
+        path.push(current)
+
+        if (current === sink) {
+            return
+        }
+
+        for (const neighbor of graph.get(current)!.keys()) {
+            if (!visited.has(neighbor) && graph.get(current)!.get(neighbor)! > 0) {
+                this.fordDfs(graph, neighbor, sink, visited, path)
+                if (path[path.length - 1] === sink) {
+                    return
+                }
+                path.pop()
+            }
+        }
+    }
+
+    /**
+     * Вспомогательный метод, находящий минимальную пропускную способность
+     * в пути.
+     */
+    private findMinCapacity(graph: Map<string, Map<string, number>>, path: string[]): number {
+        let minCapacity = Infinity
+
+        for (let i = 0; i < path.length - 1; i++) {
+            const u = path[i]
+            const v = path[i + 1]
+            minCapacity = Math.min(minCapacity, graph.get(u)!.get(v)!)
+        }
+
+        return minCapacity
+    }
 }

@@ -1,0 +1,47 @@
+@import '../node_modules/normalize.css/normalize.css';
+
+#task-eleven {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#task-eleven .description {
+    align-items: normal;
+    width: 90%;
+}
+
+#task-eleven .data {
+    padding-bottom: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+#task-eleven .data .input {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#task-eleven .data .output {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#task-eleven .data .u-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+#task-eleven .data .v-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
