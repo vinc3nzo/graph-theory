@@ -1,6 +1,6 @@
 {
   "weighted": true,
-  "oriented": true,
+  "oriented": false,
   "adj": {
     "u": {
       "v": 2,

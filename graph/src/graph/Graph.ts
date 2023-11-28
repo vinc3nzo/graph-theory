@@ -471,7 +471,7 @@ export class Graph {
    * @param u начальная вершина
    * @param v конечная вершина
    */
-  public taskTen(u: string, v: string): { distance: number; path: string[] } {
+  taskTen(u: string, v: string): { distance: number; path: string[] } {
     if (!this.exists(u)) {
       throw new NodeNotExists(u)
     }
@@ -522,131 +522,126 @@ export class Graph {
     }
 
     // построить кратчайший путь
-    const path: string[] = []
-    let current = indexOf.get(u) ?? null
-    let target = indexOf.get(v)!
+    if (dist[indexOf.get(u)!][indexOf.get(v)!] >= 0 &&
+        dist[indexOf.get(u)!][indexOf.get(v)!] !== Infinity)
+    {
+      // если в матрице неотрицательное число, значит, вершины
+      // не находятся на отрицательном цикле
+      const path: string[] = []
+      let current = indexOf.get(u) ?? null
+      let target = indexOf.get(v)!
 
-    while (current !== target) {
-      if (current === null) {
-        // нет пути из `u` в `v`
-        return {distance: Infinity, path: []}
+      while (current !== target) {
+        if (current === null) {
+          return {distance: Infinity, path: []}
+        }
+        path.push(labelOf.get(current)!)
+        current = next[current][target]
       }
-      path.push(labelOf.get(current)!)
-      current = next[current][target]
-    }
-    path.push(labelOf.get(target)!)
+      path.push(labelOf.get(target)!)
 
-    return {distance: dist[indexOf.get(u)!][indexOf.get(v)!], path}
+      return {distance: dist[indexOf.get(u)!][indexOf.get(v)!], path}
+    }
+    else {
+      // иначе понятие"кратчайшее расстояние" не существует
+      return {distance: -Infinity, path: []}
+    }
   }
 
   /**
-   * Метод, находящий максимальный поток а графе, используя алгоритм
-   * Форда-Фалкерсона.
+   * Метод находит величину максимального потока в графе
+   * с помощью алгоритма Форда-Фалкерсона
    * @param source источник
    * @param sink сток
    */
-  public taskEleven(source: string, sink: string): number {
-    if (!this.exists(source)) {
+  taskEleven(source: string, sink: string): number {
+    if (!this.adj.has(source)) {
       throw new NodeNotExists(source)
     }
-    if (!this.exists(sink)) {
+    if (!this.adj.has(sink)) {
       throw new NodeNotExists(sink)
     }
 
-    // создать остаточный граф с теми же вершинами, что и в изначальном
-    const resGraph: Map<string, Map<string, number>> = new Map()
-    for (const [vertex, edges] of this.adj.entries()) {
-      resGraph.set(vertex, new Map(edges))
+    // создать остаточный граф
+    const residualGraph: Map<string, Map<string, number>> = new Map()
+    for (const [u, neighbors] of this.adj) {
+      residualGraph.set(u, new Map())
+      for (const [v, capacity] of neighbors) {
+        residualGraph.get(u)!.set(v, capacity)
+        if (!residualGraph.has(v)) {
+          residualGraph.set(v, new Map())
+        }
+        residualGraph.get(v)!.set(u, 0) // установить вес обратных ребер 0
+      }
     }
 
     let maxFlow = 0
 
-    // расширять поток, пока есть расширяющий путь
-    let path = this.findAugmentingPath(resGraph, source, sink)
-    while (path.length > 0) {
-      // найти минимальную пропускную способность
-      const minCapacity = this.findMinCapacity(resGraph, path)
+    // продолжить поиск расширяющих путей в остаточном графе
+    while (true) {
+      const path = this.findAugmentingPath(residualGraph, source, sink)
+      if (!path) {
+        break // больше нет расширяющих путей
+      }
+
+      // найти минимальную пропускную способность на расширяющем пути
+      let minCapacity = Infinity
+      for (let i = 0; i < path.length - 1; i++) {
+        const u = path[i]
+        const v = path[i + 1]
+        minCapacity = Math.min(minCapacity, residualGraph.get(u)!.get(v)!)
+      }
 
       // обновить остаточный граф вычитанием минимальной пропускной способности
       for (let i = 0; i < path.length - 1; i++) {
         const u = path[i]
         const v = path[i + 1]
-
-        resGraph.get(u)!.set(v, resGraph.get(u)!.get(v)! - minCapacity)
-
-        // добавить обратную дугу с отрицательным весом
-        if (!resGraph.has(v)) {
-          resGraph.set(v, new Map())
-        }
-
-        if (!resGraph.get(v)!.has(u)) {
-          resGraph.get(v)!.set(u, 0)
-        }
-
-        resGraph.get(v)!.set(u, resGraph.get(v)!.get(u)! + minCapacity)
+        residualGraph.get(u)!.set(v, residualGraph.get(u)!.get(v)! - minCapacity)
+        residualGraph.get(v)!.set(u, residualGraph.get(v)!.get(u)! + minCapacity)
       }
 
-      // обновить значение максимального потока
       maxFlow += minCapacity
-
-      // найти максимальный расширяющий путь
-      path = this.findAugmentingPath(resGraph, source, sink)
     }
 
     return maxFlow
   }
 
   /**
-   * Метод поиска расширяющих путей, построенный на DFS.
-   * @param graph список смежности
-   * @param source источник
-   * @param sink сток
-   * @private
+   * Вспомогательный метод, находящий расширяющий путь в
+   * остаточном графе.
    */
-  private findAugmentingPath(graph: Map<string, Map<string, number>>, source: string, sink: string): string[] {
+  private findAugmentingPath(
+    residualGraph: Map<string, Map<string, number>>,
+    source: string,
+    sink: string
+  ): string[] | null {
     const visited: Set<string> = new Set()
-    const path: string[] = []
+    const queue: string[] = [source]
+    const parent: Map<string, string | null> = new Map()
+    parent.set(source, null)
 
-    this.fordDfs(graph, source, sink, visited, path)
+    while (queue.length > 0) {
+      const u = queue.shift()!
+      for (const v of residualGraph.get(u)!.keys()) {
+        if (!visited.has(v) && residualGraph.get(u)!.get(v)! > 0) {
+          visited.add(v)
+          parent.set(v, u)
+          queue.push(v)
 
-    return path
-  }
-
-  /**
-   * Обход в глубину.
-   */
-  private fordDfs(graph: Map<string, Map<string, number>>, current: string, sink: string, visited: Set<string>, path: string[]): void {
-    visited.add(current)
-    path.push(current)
-
-    if (current === sink) {
-      return
-    }
-
-    for (const neighbor of graph.get(current)!.keys()) {
-      if (!visited.has(neighbor) && graph.get(current)!.get(neighbor)! > 0) {
-        this.fordDfs(graph, neighbor, sink, visited, path)
-        if (path[path.length - 1] === sink) {
-          return
+          if (v === sink) {
+            // пересоздать расширяющий путь
+            const path: string[] = []
+            let current = v
+            while (current !== null) {
+              path.unshift(current)
+              current = parent.get(current)!
+            }
+            return path
+          }
         }
-        path.pop()
       }
     }
-  }
 
-  /**
-   * Вспомогательный метод, находящий минимальную пропускную способность
-   * в пути.
-   */
-  private findMinCapacity(graph: Map<string, Map<string, number>>, path: string[]): number {
-    let minCapacity = Infinity
-
-    for (let i = 0; i < path.length - 1; i++) {
-      const u = path[i]
-      const v = path[i + 1]
-      minCapacity = Math.min(minCapacity, graph.get(u)!.get(v)!)
-    }
-
-    return minCapacity
+    return null // не нашлось расширяющего пути
   }
 }

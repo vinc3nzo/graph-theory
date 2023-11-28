@@ -1,0 +1,43 @@
+\section{Дополнительный код к заданию <<Максимальный поток>>}
+\label{app:max-flow}
+
+\begin{minted}{typescript}
+/**
+ * Вспомогательный метод, находящий расширяющий путь в
+ * остаточном графе, построенный на основе BFS.
+ */
+private findAugmentingPath(
+  residualGraph: Map<string, Map<string, number>>,
+  source: string,
+  sink: string
+): string[] | null {
+  const visited: Set<string> = new Set()
+  const queue: string[] = [source]
+  const parent: Map<string, string | null> = new Map()
+  parent.set(source, null)
+
+  while (queue.length > 0) {
+    const u = queue.shift()!
+    for (const v of residualGraph.get(u)!.keys()) {
+      if (!visited.has(v) && residualGraph.get(u)!.get(v)! > 0) {
+        visited.add(v)
+        parent.set(v, u)
+        queue.push(v)
+
+        if (v === sink) {
+          // пересоздать расширяющий путь
+          const path: string[] = []
+          let current = v
+          while (current !== null) {
+            path.unshift(current)
+            current = parent.get(current)!
+          }
+          return path
+        }
+      }
+    }
+  }
+
+  return null // не нашлось расширяющего пути
+}
+\end{minted}
