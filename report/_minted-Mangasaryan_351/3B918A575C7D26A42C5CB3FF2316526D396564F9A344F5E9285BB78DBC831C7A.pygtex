@@ -1,0 +1,85 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**}
+\PYG{c+cm}{ * Метод, который находит кратчайший путь между двумя данными}
+\PYG{c+cm}{ * вершинами `u` и `v`. В графе могут быть отрицательные циклы.}
+\PYG{c+cm}{ * Реализация построена на алгоритме Флойда.}
+\PYG{c+cm}{ * @param u начальная вершина}
+\PYG{c+cm}{ * @param v конечная вершина}
+\PYG{c+cm}{ */}
+\PYG{n+nx}{taskTen}\PYG{p}{(}\PYG{n+nx}{u}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{v}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{)}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{distance}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{number}\PYG{p}{;}\PYG{+w}{ }\PYG{n+nx}{path}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{[]}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{exists}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{throw}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nx}{NodeNotExists}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{exists}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{throw}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nx}{NodeNotExists}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{c+c1}{// Map, связывающая строковую метку вершины с числом}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{indexOf}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{(}\PYG{n+nb}{Array}\PYG{p}{.}\PYG{k+kr}{from}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{keys}\PYG{p}{()).}\PYG{n+nx}{map}\PYG{p}{((}\PYG{n+nx}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{p}{]))}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{labelOf}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{(}\PYG{n+nb}{Array}\PYG{p}{.}\PYG{k+kr}{from}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{keys}\PYG{p}{()).}\PYG{n+nx}{map}\PYG{p}{((}\PYG{n+nx}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{v}\PYG{p}{]))}
+\PYG{+w}{  }\PYG{c+c1}{// Список смежности, только метки теперь числа}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{adj}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{(}\PYG{n+nb}{Array}\PYG{p}{.}\PYG{k+kr}{from}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{entries}\PYG{p}{()).}\PYG{n+nx}{map}\PYG{p}{((}\PYG{n+nx}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}
+\PYG{+w}{    }\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{(}\PYG{n+nb}{Array}\PYG{p}{.}\PYG{k+kr}{from}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{[}\PYG{l+m+mf}{1}\PYG{p}{]).}\PYG{n+nx}{map}\PYG{p}{(}\PYG{n+nx}{v}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{[}\PYG{l+m+mf}{0}\PYG{p}{])}\PYG{o}{!}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{v}\PYG{p}{[}\PYG{l+m+mf}{1}\PYG{p}{]]))]}
+\PYG{+w}{  }\PYG{p}{))}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{Array}\PYG{p}{.}\PYG{k+kr}{from}\PYG{p}{(}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{keys}\PYG{p}{())}
+
+\PYG{+w}{  }\PYG{c+c1}{// инициализировать матрицу расстояний и матрицу следующих вершин}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{dist}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{number}\PYG{p}{[][]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{next}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{number}\PYG{+w}{ }\PYG{o}{|}\PYG{+w}{ }\PYG{k+kc}{null}\PYG{p}{)[][]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
+
+\PYG{+w}{  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
+\PYG{+w}{    }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{j}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{n+nx}{j}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{n+nx}{0}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{Infinity}
+\PYG{+w}{      }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k+kc}{null}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{c+c1}{// заполнить матрицу расстояний на основе весов списка смежности}
+\PYG{+w}{  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{src}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{neighbors}\PYG{p}{]}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{entries}\PYG{p}{())}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{dst}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{weight}\PYG{p}{]}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{neighbors}\PYG{p}{.}\PYG{n+nx}{entries}\PYG{p}{())}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{src}\PYG{p}{][}\PYG{n+nx}{dst}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{weight}
+\PYG{+w}{      }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{src}\PYG{p}{][}\PYG{n+nx}{dst}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{dst}\PYG{+w}{ }\PYG{c+c1}{// установить следующую вершину в соответствии с ребром}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{c+c1}{// алгоритм Флойда}
+\PYG{+w}{  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{k}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{i}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{j}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{vertices}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{k}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{k}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{])}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{          }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{k}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{k}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}
+\PYG{+w}{          }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{j}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{][}\PYG{n+nx}{k}\PYG{p}{]}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{c+c1}{// построить кратчайший путь}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}\PYG{o}{!}\PYG{p}{][}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{)}\PYG{o}{!}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mf}{0}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}
+\PYG{+w}{      }\PYG{n+nx}{dist}\PYG{p}{[}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}\PYG{o}{!}\PYG{p}{][}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{)}\PYG{o}{!}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{!==}\PYG{+w}{ }\PYG{k+kc}{Infinity}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// если в матрице неотрицательное число, значит, вершины}
+\PYG{+w}{    }\PYG{c+c1}{// не находятся на отрицательном цикле}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{path}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{[]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
+\PYG{+w}{    }\PYG{k+kd}{let}\PYG{+w}{ }\PYG{n+nx}{current}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{??}\PYG{+w}{ }\PYG{k+kc}{null}
+\PYG{+w}{    }\PYG{k+kd}{let}\PYG{+w}{ }\PYG{n+nx}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{)}\PYG{o}{!}
+
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{current}\PYG{+w}{ }\PYG{o}{!==}\PYG{+w}{ }\PYG{n+nx}{target}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{current}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{k+kc}{null}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n+nx}{distance}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{Infinity}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{path}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{[]\PYGZcb{}}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n+nx}{path}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{labelOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{current}\PYG{p}{)}\PYG{o}{!}\PYG{p}{)}
+\PYG{+w}{      }\PYG{n+nx}{current}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{next}\PYG{p}{[}\PYG{n+nx}{current}\PYG{p}{][}\PYG{n+nx}{target}\PYG{p}{]}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n+nx}{path}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{labelOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{target}\PYG{p}{)}\PYG{o}{!}\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n+nx}{distance}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{dist}\PYG{p}{[}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}\PYG{o}{!}\PYG{p}{][}\PYG{n+nx}{indexOf}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{v}\PYG{p}{)}\PYG{o}{!}\PYG{p}{],}\PYG{+w}{ }\PYG{n+nx}{path}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// иначе понятие\PYGZdq{}кратчайшее расстояние\PYGZdq{} не существует}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n+nx}{distance}\PYG{o}{:}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{k+kc}{Infinity}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{path}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{[]\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

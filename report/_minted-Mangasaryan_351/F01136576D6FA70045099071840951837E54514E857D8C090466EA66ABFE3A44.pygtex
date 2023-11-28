@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{function}\PYG{+w}{ }\PYG{n+nx}{VertexPowers}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{adjList}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{graph}\PYG{p}{.}\PYG{n+nx}{current}\PYG{o}{!}\PYG{p}{.}\PYG{n+nx}{getAdjacencyList}\PYG{p}{()}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{powers}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{()}
+
+\PYG{+w}{  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{v}\PYG{p}{]}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{adjList}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{powers}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{n+nx}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{v}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{)}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{otherK}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{otherV}\PYG{p}{]}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{adjList}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{k}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{n+nx}{otherK}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{continue}
+
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{otherV}\PYG{p}{.}\PYG{n+nx}{find}\PYG{p}{(}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{n+nx}{value}\PYG{p}{[}\PYG{l+m+mf}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{n+nx}{k}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nx}{powers}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{n+nx}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{powers}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{1}\PYG{p}{)}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}
+\PYG{+w}{    }\PYG{p}{\PYGZlt{}}\PYG{n+nt}{TableBody}\PYG{p}{\PYGZgt{}}
+\PYG{+w}{      }\PYG{p}{\PYGZob{}}\PYG{n+nx}{graph}\PYG{p}{.}\PYG{n+nx}{current}\PYG{o}{!}\PYG{p}{.}\PYG{n+nx}{getAdjacencyList}\PYG{p}{().}\PYG{n+nx}{map}\PYG{p}{(}\PYG{n+nx}{item}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{(}
+\PYG{+w}{          }\PYG{p}{\PYGZlt{}}\PYG{n+nt}{TableRow} \PYG{n+na}{key}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{n+nx}{item}\PYG{p}{[}\PYG{l+m+mf}{0}\PYG{p}{]\PYGZcb{}\PYGZgt{}}
+\PYG{+w}{            }\PYG{p}{\PYGZlt{}}\PYG{n+nt}{TableCell} \PYG{n+na}{align}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}right\PYGZsq{}}\PYG{p}{\PYGZgt{}\PYGZob{}}\PYG{n+nx}{item}\PYG{p}{[}\PYG{l+m+mf}{0}\PYG{p}{]\PYGZcb{}\PYGZlt{}/}\PYG{n+nt}{TableCell}\PYG{p}{\PYGZgt{}}
+\PYG{+w}{            }\PYG{p}{\PYGZlt{}}\PYG{n+nt}{TableCell} \PYG{n+na}{align}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}left\PYGZsq{}}\PYG{p}{\PYGZgt{}\PYGZob{}}\PYG{n+nx}{powers}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{item}\PYG{p}{[}\PYG{l+m+mf}{0}\PYG{p}{])\PYGZcb{}\PYGZlt{}/}\PYG{n+nt}{TableCell}\PYG{p}{\PYGZgt{}}
+\PYG{+w}{          }\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{TableRow}\PYG{p}{\PYGZgt{}}
+\PYG{+w}{        }\PYG{p}{)}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{})}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{TableBody}\PYG{p}{\PYGZgt{}}
+\PYG{+w}{  }\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,87 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\cyrillictext \CYRV \CYRV \CYRE \CYRD \CYRE \CYRN \CYRI \CYRE }{5}{section*.1}%
+\contentsline {section}{\numberline {1}Минимальные требования для класса <<Граф>>}{6}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Условие задания}{6}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Примеры исходного кода}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Примеры входных и выходных данных}{11}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Список смежности Ia}{14}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Условие задания}{14}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Примеры исходного кода}{14}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Краткое описание алгоритма}{15}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Примеры входных и выходных данных}{15}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Входные данные}{15}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Выходные данные}{16}{subsubsection.2.4.2}%
+\contentsline {section}{\numberline {3}Список смежности Ia}{17}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Условие задания}{17}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Примеры исходного кода}{17}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Краткое описание алгоритма}{17}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Примеры входных и выходных данных}{18}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Входные данные}{18}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Выходные данные}{19}{subsubsection.3.4.2}%
+\contentsline {section}{\numberline {4}Список смежности Iб: несколько графов}{20}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Условие задания}{20}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Примеры исходного кода}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Краткое описание алгоритма}{21}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Примеры входных и выходных данных}{21}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}Входные данные}{21}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Выходные данные}{23}{subsubsection.4.4.2}%
+\contentsline {section}{\numberline {5}Обходы графа II}{24}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Условие задания}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Примеры исходного кода}{24}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Краткое описание алгоритма}{24}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Примеры входных и выходных данных}{25}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Входные данные}{25}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Выходные данные}{26}{subsubsection.5.4.2}%
+\contentsline {section}{\numberline {6}Обходы графа II}{27}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Условие задания}{27}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Примеры исходного кода}{27}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Краткое описание алгоритма}{28}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Примеры входных и выходных данных}{28}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Входные данные}{28}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {6.4.2}Выходные данные}{29}{subsubsection.6.4.2}%
+\contentsline {section}{\numberline {7}Каркас III}{30}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Условие задания}{30}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Примеры исходного кода}{30}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Краткое описание алгоритма}{31}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Примеры входных и выходных данных}{32}{subsection.7.4}%
+\contentsline {subsubsection}{\numberline {7.4.1}Входные данные}{32}{subsubsection.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.2}Выходные данные}{33}{subsubsection.7.4.2}%
+\contentsline {section}{\numberline {8}Веса IV а}{34}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Условие задания}{34}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Примеры исходного кода}{34}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Краткое описание алгоритма}{36}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Примеры входных и выходных данных}{37}{subsection.8.4}%
+\contentsline {subsubsection}{\numberline {8.4.1}Входные данные}{37}{subsubsection.8.4.1}%
+\contentsline {subsubsection}{\numberline {8.4.2}Выходные данные}{38}{subsubsection.8.4.2}%
+\contentsline {section}{\numberline {9}Веса IV b}{39}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Условие задания}{39}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Примеры исходного кода}{39}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Краткое описание алгоритма}{40}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Примеры входных и выходных данных}{41}{subsection.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.1}Входные данные}{41}{subsubsection.9.4.1}%
+\contentsline {subsubsection}{\numberline {9.4.2}Выходные данные}{43}{subsubsection.9.4.2}%
+\contentsline {section}{\numberline {10}Веса IV c}{44}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Условие задания}{44}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Примеры исходного кода}{44}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Краткое описание алгоритма}{46}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Примеры входных и выходных данных}{47}{subsection.10.4}%
+\contentsline {subsubsection}{\numberline {10.4.1}Входные данные}{47}{subsubsection.10.4.1}%
+\contentsline {subsubsection}{\numberline {10.4.2}Выходные данные}{48}{subsubsection.10.4.2}%
+\contentsline {section}{\numberline {11}Максимальный поток}{49}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Условие задания}{49}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Примеры исходного кода}{49}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Краткое описание алгоритма}{50}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Примеры входных и выходных данных}{51}{subsection.11.4}%
+\contentsline {subsubsection}{\numberline {11.4.1}Входные данные}{51}{subsubsection.11.4.1}%
+\contentsline {subsubsection}{\numberline {11.4.2}Выходные данные}{52}{subsubsection.11.4.2}%
+\contentsline {subsubsection}{\numberline {11.4.3}Входные данные}{52}{subsubsection.11.4.3}%
+\contentsline {subsubsection}{\numberline {11.4.4}Выходные данные}{53}{subsubsection.11.4.4}%
+\contentsline {subsubsection}{\numberline {11.4.5}Входные данные}{53}{subsubsection.11.4.5}%
+\contentsline {subsubsection}{\numberline {11.4.6}Выходные данные}{54}{subsubsection.11.4.6}%
+\contentsline {section}{\cyrillictext \CYRZ \CYRA \CYRK \CYRL \CYRYU \CYRCH \CYRE \CYRN \CYRI \CYRE }{55}{section*.34}%
+\redeflsection 
+\ttl@change@i {\@ne }{section}{3ex}{\hspace {-3ex}}{\appendixname ~\thecontentslabel \hspace {2ex}}{\hspace {2.3em}}{\titlerule *[0.98ex]{.}\contentspage }\relax 
+\ttl@change@v {section}{}{}{}\relax 
+\contentsline {section}{\numberline {\CYRA }Компонент \FVExtraRobustCommand \RobustMintInline \FVExtraAlwaysUnexpanded {\FVExtraUnexpandedReadStarOArgMArgBVArg {text}{App}} веб"=интерфейса}{56}{appendix.A}%
+\contentsline {section}{\numberline {\CYRB }Дополнительный код к заданию <<Максимальный поток>>}{62}{appendix.B}%
+\contentsfinish 

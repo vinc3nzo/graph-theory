@@ -136,9 +136,107 @@ disconnect(a: string, b: string) {
 }
 \end{minted}
 
-Вместо консольного сразу был реализован веб"=интерфейс на React.js.
-Основной компонент интерфейса (\mitext{App}) представлен в приложении
+\begin{figure}[H]
+  \centering\includegraphics[width=1.0\textwidth]{figs/task-1/int-1.png}
+  \caption{Общий вид интерфейса}
+  \label{fig:int-overview}
+\end{figure}
+
+Вместо консольного был реализован веб"=интерфейс (см.\,рис.\,\ref{fig:int-overview})
+на React.js. Основной компонент интерфейса (\mitext{App}) представлен в приложении
 \ref{app:app-component}.
+
+\begin{figure}[H]
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.7\linewidth]{figs/task-1/int-2.png}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.7\linewidth]{figs/task-1/int-3.png}
+  \end{minipage}
+  \caption{Виды графов}
+  \label{fig:int-basic-params}
+\end{figure}
+
+\begin{figure}
+  \centering\includegraphics[width=0.8\textwidth]{figs/task-1/int-6.png}
+  \caption{Загрузка и выгрузка в файл}
+  \label{fig:int-file-io}
+\end{figure}
+
+Графы можно загружать из файлов и сохранять в файлы. В последнем случае
+на компьютер скачается файл с описанием графа в формате JSON.
+
+Интерфейс позволяет пользователю работать с различными видами графов:
+ориентированным/неориентированным, взвешенным/невзвешенным\\
+(см.\,рис.\,\ref{fig:int-basic-params}).
+
+Текущее состояние графа отображается в виде списка смежности внизу
+интерфейса.
+
+Доступные операции:
+\begin{itemize}
+  \item добавление вершин;
+  \item удаление вершин;
+  \item создание связей;
+  \item удаление связей.
+\end{itemize}
+
+\begin{figure}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-4.png}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.7\linewidth]{figs/task-1/int-5.png}
+  \end{minipage}
+  \caption{Добавление вершины в граф}
+  \label{fig:int-node-add}
+\end{figure}
+
+Пример добавления вершины и результат действия представлен на
+рис.\,\ref{fig:int-node-add}.
+
+\begin{figure}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-12.png}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-8.png}
+  \end{minipage}
+  \caption{Создание связи между вершинами}
+  \label{fig:int-connect-nodes}
+\end{figure}
+
+Пример создания связи между вершинами и результат представлены
+на рис.\,\ref{fig:int-connect-nodes}.
+
+\begin{figure}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-9.png}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-10.png}
+  \end{minipage}
+  \caption{Удаление вершины}
+  \label{fig:int-node-del}
+\end{figure}
+
+Пример удаления вершины и результат представлены
+на рис.\,\ref{fig:int-node-del}.
+
+\begin{figure}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.7\linewidth]{figs/task-1/int-7.png}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering\includegraphics[width=0.8\linewidth]{figs/task-1/int-11.png}
+  \end{minipage}
+  \caption{Вывод сообщения об ошибке}
+  \label{fig:int-alert}
+\end{figure}
+
+Если в какой"~то операции пользователь пытается выполнить недопустимое действие
+(создать вершину с пустой меткой, сослаться на несуществующую вершину),
+ему выводится сообщение об ошибке (см.\,рис.\,\ref{fig:int-alert}).
 
 \subsection{Примеры входных и выходных данных}
 Взвешенный ориентированный граф:

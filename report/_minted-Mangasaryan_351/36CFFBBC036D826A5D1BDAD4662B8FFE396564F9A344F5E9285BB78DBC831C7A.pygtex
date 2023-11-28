@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nx}{shortestPathLengthsFrom}\PYG{p}{(}\PYG{n+nx}{u}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{)}\PYG{o}{:}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{string}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{number}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{has}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{throw}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nx}{NodeNotExists}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{)}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{shortestPaths}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{Map}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{string}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{number}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Map}\PYG{p}{()}
+
+\PYG{+w}{  }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{node}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{keys}\PYG{p}{())}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{shortestPaths}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{n+nx}{node}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kc}{Infinity}\PYG{p}{)}\PYG{+w}{ }\PYG{c+c1}{// пока считаем, что расстояния до других узлов бесконечность}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n+nx}{shortestPaths}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{n+nx}{u}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0}\PYG{p}{)}\PYG{+w}{ }\PYG{c+c1}{// расстояние до самого себя 0}
+
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{queue}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{u}\PYG{p}{]}\PYG{+w}{ }\PYG{c+c1}{// очередь обхода}
+\PYG{+w}{  }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{queue}\PYG{p}{.}\PYG{n+nx}{length}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mf}{0}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{currentNode}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{queue}\PYG{p}{.}\PYG{n+nx}{shift}\PYG{p}{()}\PYG{o}{!}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{neighbors}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{currentNode}\PYG{p}{)}\PYG{o}{!}
+
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{neighbor}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{neighbors}\PYG{p}{.}\PYG{n+nx}{keys}\PYG{p}{())}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{shortestPaths}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{neighbor}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{k+kc}{Infinity}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{// если узел еще не был посещен}
+\PYG{+w}{        }\PYG{c+c1}{// установить кратчайшее расстояние до него}
+\PYG{+w}{        }\PYG{n+nx}{shortestPaths}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{n+nx}{neighbor}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{shortestPaths}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{currentNode}\PYG{p}{)}\PYG{o}{!}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{1}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n+nx}{queue}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{neighbor}\PYG{p}{)}\PYG{+w}{ }\PYG{c+c1}{// добавить соседний узел в очередь обхода}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nx}{shortestPaths}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
