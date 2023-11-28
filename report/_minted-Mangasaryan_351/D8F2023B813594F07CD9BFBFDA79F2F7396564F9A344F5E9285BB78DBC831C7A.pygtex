@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k+kd}{let}\PYG{+w}{ }\PYG{n+nx}{resList}\PYG{o}{:}\PYG{+w}{ }\PYG{k+kt}{string}\PYG{p}{[]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{[]}
-\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kd}{const}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{node}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{\PYGZus{}}\PYG{p}{]}\PYG{+w}{ }\PYG{k}{of}\PYG{+w}{ }\PYG{n+nx}{graph}\PYG{p}{.}\PYG{n+nx}{current}\PYG{o}{!}\PYG{p}{.}\PYG{n+nx}{getAdjacencyList}\PYG{p}{())}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
-\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{nodeName}\PYG{+w}{ }\PYG{o}{!==}\PYG{+w}{ }\PYG{n+nx}{node}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n+nx}{adj}\PYG{p}{.}\PYG{n+nx}{has}\PYG{p}{(}\PYG{n+nx}{node}\PYG{p}{))}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
-\PYG{+w}{    }\PYG{n+nx}{resList}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{node}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{())}
-\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
-\PYG{p}{\PYGZcb{}}
-\PYG{n+nx}{setAnswer}\PYG{p}{(}\PYG{n+nx}{resList}\PYG{p}{.}\PYG{n+nx}{join}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}, \PYGZsq{}}\PYG{p}{))}
-\end{Verbatim}
